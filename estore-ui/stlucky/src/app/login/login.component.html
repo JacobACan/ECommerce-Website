@@ -1,0 +1,16 @@
+<div *ngIf="user">
+  <div id="login-component">
+    <div class="feild">
+      <h2 for="username-box">Username</h2>
+      <input type="text" id="name" [(ngModel)]="user.name" />
+    </div>
+    <div class="feild">
+      <h2 for="password-box">Password</h2>
+      <input type="password" id="pw" [(ngModel)]="user.password" />
+    </div>
+    <button type="submit" (click)="onLogin()">Login</button>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="submit" (click)="onSignup()">Sign up</button>
+  </div>
+</div>

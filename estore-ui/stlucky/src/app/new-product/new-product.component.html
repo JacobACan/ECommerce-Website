@@ -1,0 +1,69 @@
+<div *ngIf="isAdmin; else notAdmin">
+  <div class="product" *ngIf="product">
+    <div class="field">
+      <label for="product-name">product name: </label>
+      <input type="text" id="product-name" [(ngModel)]="product.name" />
+    </div>
+    <div class="field">
+      <label for="product-quantity">product quantity: </label>
+      <input
+        type="number"
+        id="product-quantity"
+        [(ngModel)]="product.quantity"
+      />
+    </div>
+    <div class="field">
+      <label for="product-price">product price: </label>
+      <input type="number" id="product-price" [(ngModel)]="product.price" />
+    </div>
+    <div class="field">
+      <label for="product-image-link">product image link: </label>
+      <input
+        type="text"
+        id="product-image-link"
+        [(ngModel)]="product.imageUrlList[0]"
+      />
+    </div>
+    <div class="field">
+      <label for="product-stl-path">product stl path: </label>
+      <input
+        type="text"
+        id="product-stl-path"
+        [(ngModel)]="product.imageUrlList[1]"
+      />
+    </div>
+    <div class="field">
+      <label for="product-price">Time to Print(days): </label>
+      <input
+        id="product-name"
+        [(ngModel)]="product.expediency"
+      />
+    </div>
+    <div>
+      <label for="product-sections">Sections: </label>
+      
+      <ul>
+        <li
+          *ngFor="
+            let section of product.sections;
+            index as i;
+            trackBy: trackByFn
+          "
+        >
+
+          <input id="product-name" [(ngModel)]="product.sections[i]" />
+          <button type="removeSection" (click)="removeSection(i)">
+            Remove Section
+          </button>
+        </li>
+      </ul>
+      
+      <button type="addSection" (click)="addSection()">Add Section</button>
+    </div>
+    <button type="button" (click)="goBack()">Back</button>
+    <button type="button" (click)="createProduct()">Create Product</button>
+  </div>
+</div>
+<ng-template #notAdmin>
+  <h1>Error 403: Forbidden Access</h1>
+</ng-template>

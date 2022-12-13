@@ -1,0 +1,18 @@
+.product {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.field {
+  display: flex;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+label {
+  width: 50%;
+  text-align: right;
+}
+input {
+  width: 10%;
+  text-align: center;
+}

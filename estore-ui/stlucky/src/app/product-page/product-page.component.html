@@ -1,0 +1,119 @@
+<div *ngIf="isUser; else notUser">
+  <button class="product-page-nav" (click)="goHome()">View All Products</button>
+  <div class="product" *ngIf="product; else noProduct">
+    <ul *ngIf="product.name != 'null' && product.quantity > 0; else outStock">
+      <li>
+        <h1>{{ product.name }}</h1>
+        <div id="customize-container">
+          <ul id="rating-and-price">
+            <app-star-rating
+              title="Average Rating"
+              [rating]="product.avgRating"
+            ></app-star-rating>
+            <li class="price">${{ product.price.toFixed(2) }}</li>
+          </ul>
+          <h2>Customize</h2>
+
+          <label>Material Type</label>
+          <select id="product-material" [(ngModel)]="product.material">
+            <option
+              *ngFor="let materialType of materialTypes"
+              [value]="materialType"
+            >
+            <button type="button" (click)="save()">{{ materialType }}</button>
+            </option>
+          </select>
+
+          <label>Filament Color</label>
+          <select id="product-color" [(ngModel)]="product.colors[0]">
+            <option
+            *ngFor="let colorOption of colorSelect"
+            [value]="colorOption"
+            >
+            <button type="button" (click)="save()">{{ colorOption }}</button>
+            </option>
+          </select>
+
+          <button type="button" (click)="save()">Update Preview</button>
+          
+          <label *ngIf="product.sections.length > 0">Hand Painting</label>
+          <li
+            class="sections"
+            *ngFor="let section of product.sections; index as i"
+          >
+            {{ section }}
+            <select id="product-color" [(ngModel)]="product.colors[i+1]">
+              <option
+                class="field"
+                *ngFor="let colorOption of colorSelect"
+                [value]="colorOption"
+              >
+                {{ colorOption }} 
+              </option>
+            </select>
+          </li>
+          <li>
+            <label>Size: {{ product.size }}%</label>
+            <input
+              type="range"
+              min="25"
+              max="400"
+              [(ngModel)]="product.size"
+              step="25"
+            />
+          </li>
+          <li>
+            Ship as a Gift? <input type="checkbox" [(ngModel)]="product.gift" />
+          </li>
+        </div>
+      </li>
+      <stl-model-viewer
+        [stlModels]="[product.imageUrlList[1]]"
+        [light]="color"
+        [scene]="scene"
+        [renderer]="renderer"
+        [material]="textures"
+      >
+      </stl-model-viewer>
+      <div>
+        <li class="addToCart" *ngIf="product">
+          <button (click)="addToCart()" class="add-to-cart-button">
+            Add to Cart : {{ numberAdded }}
+          </button>
+        </li>
+        <li>
+          <button
+            class="remove-from-cart-button"
+            *ngIf="numberAdded > 0"
+            (click)="removeFromCart()"
+          >
+            Remove from cart
+          </button>
+        </li>
+      </div>
+      <li class="expediency">Expected in {{ product.expediency }} day(s).</li>
+      <li class="expediency">Click to rate {{ product.name }}</li>
+      <app-add-star-rating [product]="product"></app-add-star-rating>
+      <li>&nbsp;&nbsp;</li>
+    </ul>
+  </div>
+</div>
+<ng-template #noProduct>
+  <h1>Error 404: Product not Found</h1>
+</ng-template>
+<ng-template #notUser>
+  <h1>Error 403: Forbidden Access</h1>
+</ng-template>
+
+<ng-template #outStock>
+  <h2>Sorry, {{product.name}} is Out of Stock</h2>
+  <ul id="rating-and-price">
+    <app-star-rating
+      title="Average Rating"
+      [rating]="product.avgRating"
+    ></app-star-rating>
+    <li class="price">${{ product.price.toFixed(2) }}</li>
+  </ul>
+
+  <app-add-star-rating [product]="product"></app-add-star-rating>
+</ng-template>

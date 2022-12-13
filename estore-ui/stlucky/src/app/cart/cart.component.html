@@ -1,0 +1,31 @@
+<div class="cart" *ngIf="isUser; else notUser">
+  <ul class="products">
+    <h1>{{ userName }}</h1>
+    <h2 class="price" *ngIf="price > 0">${{ price.toFixed(2) }}</h2>
+    <ul *ngIf="!checkoutSuccessful; else CheckoutSuccess">
+      <li *ngFor="let Product of cart">
+        <a>
+          <div class="product">
+            <h2>{{ Product.name }}</h2>
+            <div class="product-amount">{{ Product.quantity }}</div>
+          </div>
+        </a>
+      </li>
+      <button
+        title="Pay ${{ price }} for selected items."
+        *ngIf="cart.length > 0"
+        (click)="checkout()"
+      >
+        <div id="checkout">Checkout</div>
+      </button>
+    </ul>
+  </ul>
+</div>
+
+<ng-template #notUser>
+  <h1>Error 403: Forbidden Access</h1>
+</ng-template>
+
+<ng-template #CheckoutSuccess>
+  <h2>Have A Lucky Day!</h2>
+</ng-template>

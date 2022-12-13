@@ -1,0 +1,16 @@
+[
+  { "name": "ADMIN", "isAdmin": true, "passwordHash": 92668751 },
+  {
+    "name": "Jacob",
+    "isAdmin": false,
+    "passwordHash": 48690,
+    "cart": { "1": 2 }
+  },
+  { "name": "TEST", "isAdmin": false, "passwordHash": 3556498, "cart": {} },
+  {
+    "name": "Zach",
+    "isAdmin": false,
+    "passwordHash": 48690,
+    "cart": { "0": 4, "13": 1 }
+  }
+]

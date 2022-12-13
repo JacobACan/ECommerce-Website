@@ -1,0 +1,22 @@
+<div id="search-component">
+  <!-- <label for="search-box">Product Search</label> -->
+  <input
+    #searchBox
+    placeholder="Search Products"
+    id="search-box"
+    value=""
+    (input)="search(searchBox.value)"
+    (blur)="this.searchBox.value = ''"
+    (blur)="search(searchBox.value)"
+  />
+
+  <ul class="search-result">
+    <li *ngFor="let product of products$ | async">
+      <a (click)="navigate(product.id)">
+        {{ product.name }}
+      </a>
+    </li>
+
+    <li></li>
+  </ul>
+</div>

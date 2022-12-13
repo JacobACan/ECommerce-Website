@@ -1,0 +1,71 @@
+<div class="nav-backing">
+  <img
+    routerLink=""
+    class="logo"
+    src="assets\media\images\logo\STLucky-1.png"
+    alt=""
+  />
+  <nav>
+    <ul class="nav-options">
+      <li>
+        <ul id="search-display">
+          <app-product-search id="search-component"></app-product-search>
+          <li>
+            <img
+              class="nav-icon search"
+              src="http://cdn.onlinewebfonts.com/svg/img_456268.png"
+              alt=""
+            />
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a routerLink="">
+          <img
+            title="Navigate to Home Page."
+            class="nav-icon home"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Home-icon.svg/2048px-Home-icon.svg.png"
+            alt=""
+          />
+        </a>
+      </li>
+      <!-- <li>
+        <a class="nav-button about" routerLink="/about">About</a>
+      </li> -->
+      <li *ngIf="!LoginStatus">
+        <a class="nav-button login" *ngIf="!LoginStatus" routerLink="/login"
+          >Login</a
+        >
+      </li>
+      <!-- <li *ngIf="LoginStatus">
+        <a *ngIf="UserName != '' ">{{ UserName }}</a>
+      </li> -->
+      <li *ngIf="LoginStatus">
+        <select
+          class="nav-button logout"
+          (change)="onLogout()"
+          *ngIf="LoginStatus"
+          name="Account Options"
+          id="account-options"
+        >
+          <option selected disabled hidden>{{ UserName }}</option>
+          <option value="logout">logout</option>
+        </select>
+      </li>
+      <li *ngIf="UserRole != 'admin'">
+        <a class="cart-amount">{{ amountInCart }}</a>
+        <a routerLink="/cart">
+          <img
+            title="View items in shoppint cart."
+            class="nav-icon cart"
+            src="https://freepngimg.com/thumb/categories/1325.png"
+            alt=""
+          />
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div class="page-content">
+  <router-outlet></router-outlet>
+</div>

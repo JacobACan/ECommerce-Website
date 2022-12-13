@@ -1,0 +1,32 @@
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
+></script>
+<h1
+  title="Create your own products in the store."
+  class="header create"
+  *ngIf="user == 'ADMIN'"
+  routerLink="/products/admin"
+>
+  Create A Product
+</h1>
+
+<h1 class="header" *ngIf="user != 'ADMIN'">Available Products</h1>
+
+<ul class="products-container">
+  <li *ngFor="let product of products">
+    <div class="product-background">
+      <a
+        title="View {{ product.name }} in more detail."
+        class="product"
+        (click)="navigate(product.id)"
+      >
+        <img src="{{ product.imageUrlList[0] }}" alt="" />
+        <h2 class="name">{{ product.name }}</h2>
+        <app-star-rating [rating]="product.avgRating"></app-star-rating>
+        <span class="price">${{ product.price.toFixed(2) }}</span>
+        <br />
+      </a>
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,31 @@
+#login-component {
+  height: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.feild {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  height: 7vh;
+  font-size: 2vw;
+  text-align: center;
+  border-radius: 3vw;
+}
+h2 {
+  font-size: 4vw;
+}
+button {
+  border-radius: 3vw;
+  font-size: 2vw;
+  margin-top: 2vh;
+  font-family: "Montserrat", sans-serif;
+}

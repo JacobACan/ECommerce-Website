@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DesignDoc.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="project-design-documentation">PROJECT Design Documentation</h1>
+<blockquote>
+<p><em>The following template provides the headings for your Design
+Documentation.  As you edit each section make sure you remove these
+commentary 'blockquotes'; the lines that start with a &gt; character
+and appear in the generated PDF in italics.</em></p>
+</blockquote>
+<h2 id="team-information">Team Information</h2>
+<ul>
+<li>Team name: A-AAAAAAAA</li>
+<li>Team members
+<ul>
+<li>Diogo Almeida</li>
+<li>Zachary Brafman</li>
+<li>Jacob Canedy</li>
+<li>Christopher Nokes</li>
+<li>Samson Zhang</li>
+</ul>
+</li>
+</ul>
+<h2 id="executive-summary">Executive Summary</h2>
+<p>This project is a e-store featuring 3D printing related products, such as STL files and 3D printed models.</p>
+<h3 id="purpose">Purpose</h3>
+<p>The purpose of this project is to provide a small business owner a custom made website to to sell their products with ease through E-commerce. An e-store is especially useful for a 3D printing related business, as it makes selling a mix of digital and physical products easier.</p>
+<h3 id="glossary-and-acronyms">Glossary and Acronyms</h3>
+<blockquote>
+<p><em>Provide a table of terms and acronyms.</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STL</td>
+<td>Stereolithography is a popular 3D printing technology. You might also hear it referred to as Standard Triangle Language or Standard Tessellation Language. Each file is made up of a seriesof linked triangles that describe the surface geometry of a 3D model or object.</td>
+</tr>
+<tr>
+<td>MVP</td>
+<td>Minimum Viable Product</td>
+</tr>
+<tr>
+<td>API</td>
+<td>An application programming interface is a way for two or more computer programs to communicate with each other.</td>
+</tr>
+<tr>
+<td>UI</td>
+<td>The user interface (UI) is the point of human-computer interaction and communication in a device.</td>
+</tr>
+<tr>
+<td>Angular</td>
+<td>Typescript Framework used to build Website.</td>
+</tr>
+<tr>
+<td>MVN</td>
+<td>Maven is a popular open-source build tool developed by the Apache Group to build, publish, and deploy several projects at once for better project management. The tool provides allows developers to build and document the lifecycle framework.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="requirements">Requirements</h2>
+<p>This section describes the features of the application.</p>
+<h3 id="definition-of-mvp">Definition of MVP</h3>
+<p>A website that has authentication for login &amp; logout for both user and e-store owner. The customers can access/buy products, whereas the e-store owner is able to manage the product inventory. The software is able to save information such as the product inventory, list of products in a customer's cart.</p>
+<h3 id="mvp-features">MVP Features</h3>
+<ul>
+<li>As a customer I want to login so that I can save products to my cart and checkout products.</li>
+<li>As a e-store owner I want to login so that I can manage the product inventory.</li>
+<li>As a user I want to log out so that other people can't access my account.</li>
+<li>As an admin I want to access backend product control so that I can add, remove, and update products.</li>
+<li>As a customer I want to be able to add products to my shopping cart so that I can manage my cart.</li>
+<li>As a customer I want to be able to remove products from my shopping cart so that I can manage my cart.</li>
+<li>As a customer I want to checkout my shopping cart so that I can receive my product.</li>
+<li>As a customer I want to access the home page so that I can look at/buy products.</li>
+<li>As a customer I want to be able to search products so I can look for specific products.</li>
+</ul>
+<h3 id="roadmap-of-enhancements">Roadmap of Enhancements</h3>
+<blockquote>
+<p><em>Provide a list of top-level features in the order you plan to consider them.</em></p>
+</blockquote>
+<p>About page
+Password for login</p>
+<p>Product viewing</p>
+<ul>
+<li>Product description</li>
+<li>3D STL preview</li>
+<li>2D image preview</li>
+</ul>
+<p>Product attribute selection</p>
+<ul>
+<li>Size selection</li>
+<li>Material selection</li>
+<li>Resolution selection</li>
+</ul>
+<p>User STL file upload</p>
+<p>Review system</p>
+<ul>
+<li>Post reviews</li>
+<li>Remove reviews</li>
+</ul>
+<h2 id="application-domain">Application Domain</h2>
+<p>This section describes the application domain.</p>
+<p><img src="Domain-Analysis.png" alt="Domain Model"></p>
+<p>The customer and e-store owner both have accounts that they can use to log into the website. The customer is able to access the products and their shopping cart. On the other hand, the e-store owner is able to access the product inventory, which contains specific products, as such, the owner is also able to edit specific products. These specific products can be split into three different categories, STL files provided by the store, user-uploaded STL files for 3D printing service, and finished 3D printed models. Both customers and the e-store owner are able to access product ratings/reviews.</p>
+<h2 id="architecture-and-design">Architecture and Design</h2>
+<p>This section describes the application architecture.</p>
+<h3 id="summary">Summary</h3>
+<p>The following Tiers/Layers model shows a high-level view of the webapp's architecture.</p>
+<p><img src="architecture-tiers-and-layers.png" alt="The Tiers &amp; Layers of the Architecture"></p>
+<p>The e-store web application, is built using the Model–View–ViewModel (MVVM) architecture pattern.</p>
+<p>The Model stores the application data objects including any functionality to provide persistance.</p>
+<p>The View is the client-side SPA built with Angular utilizing HTML, CSS and TypeScript. The ViewModel provides RESTful APIs to the client (View) as well as any logic required to manipulate the data objects from the Model.</p>
+<p>Both the ViewModel and Model are built using Java and Spring Framework. Details of the components within these tiers are supplied below.</p>
+<h3 id="overview-of-user-interface">Overview of User Interface</h3>
+<p>This section describes the web interface flow; this is how the user views and interacts
+with the e-store application.</p>
+<p>On top of the page, there is a navigation bar containing links to different pages (Home, About, Cart, Search, Login/out). In the Home page, the user is able to see the list of products in the inventory that they can choose from. The login link takes user to the login page, where they will be prompted to input a username and password, when the user is logged in, the login link is replaced by a logout link. If the user is not an admin, they can add products to their cart through a specific product's page, which is accessed through searching the product in the search page. If the user is an admin, then they are able to edit a product in the specific product's page, accessed through search as well.</p>
+<h3 id="view-tier">View Tier</h3>
+<p>The View Tier is composed of all the components in the e-store shown to users for all pages and pieces of
+information necessary to navigate and properly use the website and interact with the ViewModel. It is composed
+of components such as: About, Cart, Home, Login, NavMenu, NewProduct, ProductAdmin, ProdutcPage, ProductSearch, and
+Products.</p>
+<p>About is the component responsible for showing the information about the store and team creating it</p>
+<p>Cart is a component only available to Customers and is responsible for showing the curstomers all
+products that have been added to the cart and allow interaction to the viewModel to checkout products</p>
+<p>Home is the component where all products are displayed, a user is able to see all products currently in
+the model, their prices, quantities, and images.</p>
+<p>Login is the component where the user can login by inputting a username and password, if the login is successful
+the login information is stored with the accountService in the ViewModel.</p>
+<p>NavMenu is the component shown in all pages and shows all routerLinks to the other global components that can be
+reached by the users</p>
+<p>NewProduct is the component available to admin only in which they can create new products by informing the properties
+of a product to be able to create a new product</p>
+<p>ProductAdmin is the component available to admin only in which they update product information depending on the id
+of the user, or delete a product.</p>
+<p>ProductPage is the component available to Customers only in which they can add and remove items to the cart and see
+the quantity, price, and name of the products</p>
+<p>ProductSearch is the component in which users can search terms and find products that are avaivlable in the catalog.
+If user is an Admin, clicking on the product redirects you to ProductAdmin, if customer, to ProductPage.</p>
+<p>Products is the component in which users can see all products available in the ViewModel and display them in the page</p>
+<h3 id="viewmodel-tier">ViewModel Tier</h3>
+<p>The ViewModel is composed mostly of controllers and services, being them in the code: ProductController,
+UserController, AccountService, CartService, and ProductService.</p>
+<p>Those in the ViewModel tier are responsible for exposing and allowing communication between information
+created and stored in the model and user actions made in the view, creating the possibility of interaction
+and visibility of that information by the user in the e-store at any moment.</p>
+<p>ProductController is the piece of code responsible for the user interaction with product information in the
+model. All usages of HTTP requests to create, delete, update, and get product are done via the product
+controller, making changes in the model only when those changes are allowed and maitaining all data safe
+and organized.</p>
+<p>UserController is the piece of code responsible for the user interaction with User information in the
+model. All usages of HTTP requests to login, sign-up and get current users are done via the user
+controller, making changes in the model only when those changes are allowed and maitaining all data safe
+and organized.</p>
+<p>AccountService is used by the View to keep track and utilize user account informations on the website.
+Information such as LoginStatus, UserName, and UserRole are stored in it and used to populate the view
+with the correct information for that user. Also, they are used to get the information to and from controllers.</p>
+<p>CartService is used by the View to keep track and utilize cart per account informations on the website.
+Information such as products currently stored in user's cart, the amounts and ids of those products, and
+checkout and products cost are stored in it and used to populate the view with the correct information
+for that user. Also, they are used to get the information to and from controllers.</p>
+<p>ProductService is used by the View to keep track and utilize products informations on the website.
+Information such as product's id, name, price, and quantity can be obtainned with it and used to populate the view
+with the correct information for that user. Also, they are used to get the information to and from controllers.</p>
+<h3 id="model-tier">Model Tier</h3>
+<p>The model is built up of two major components: the UserList and the ProductList; the user list
+is made up of various users -- specifically Admins and Customers -- while the ProductList is made
+up of products.</p>
+<p>Whenever the server starts, both the UserList and ProductList read their respective JSON files for
+records of current interactions on the site. While the ProductList doesn't know about the UserList,
+the UserList has an instance of the store's productlist, such that products can be interacted with
+(IE: quantity decreased, information accessed) when requested.</p>
+<p>When a user logs in, their username and password are sent through the ViewModel tier to the Model tier,
+where it is handled by the UserList class. If a User doesn't exist with that name, it is created; otherwise,
+if the passwords match, the user is &quot;logged in&quot; (or, as far as the backend is concerned, the User's details
+are returned), otherwise the password fails, and they are not logged in.</p>
+<p>Only a customer can be created when called from the ViewModel Tier; admins must be created manually
+in the code. When a customer is created, the UserList class checks to make sure that a user with that
+name does not already exist; if it doesn't, a new customer is created and returned, with the password
+input by the user. Said user is then added to the JSON.</p>
+<p>Passwords are handled by a basic hashcode; when a User sends a password (both to create or log in) to
+a user, the hashcode of the password is taken and compared with that in the database (JSON).</p>
+<p>Only one admin exists, and it is created manually every time the server boots; this allows for the
+Users JSON to be a list of Customers, not all Users, which makes the reading process simpler.</p>
+<p>Products can be accessed in two ways: by the customer, who views them and puts them into their cart,
+and by the admin, who alters their features. Access to these features is reliant upon what account
+is currently logged in.</p>
+<p>Product creation follows a similar process to User creation: the front end submits a request for product
+creation with specifications (quantity, price, etc.) and, if that product does not already exist, it is
+created and given an ID (said ID representing its &quot;slot&quot; in the store). The product is then added to the
+JSON and the ProductList.</p>
+<p>Deleting and updating a product follow the same process; an admin puts in a request to delete/update a
+product and, so long as that product exists and is valid, it is done. While from the front end, a product
+cannot be accessed to be deleted or edited if it is invalid, the backend still handles these cases as
+a precaution. Additionally, whenever a user purchases an item from their cart, it decrements the quantity
+of that product. Regardless of the action taken, assuming it is successful, the JSON is updated promptly.</p>
+<h3 id="static-code-analysisdesign-improvements">Static Code Analysis/Design Improvements</h3>
+<blockquote>
+<p><em>Design Improvements</em></p>
+</blockquote>
+<ul>
+<li>Full detailed checkout info is not displayed.
+<ul>
+<li>Different attributes of products such as section colors not displayed</li>
+<li>Shipping time not displayed</li>
+</ul>
+</li>
+<li>User not notified if section added or removed from a product (though this would be an unlikely occurance)</li>
+<li>User can leave multiple reviews on the same product.</li>
+<li>Users will be signed out when refreshing the page.</li>
+<li>Users still able to search for products that are out of stock.</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/113440108/200565869-235f0c94-061d-4ddf-a84f-2240f5dcda4a.png" alt="SonarReport"></p>
+<ul>
+<li>As you can see, Our report taken at the end of Sprint 2 showed signs that our code could use more coverage.</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<blockquote>
+<p><em>This section will provide information about the testing performed
+and the results of the testing.</em></p>
+</blockquote>
+<h3 id="acceptance-testing">Acceptance Testing</h3>
+<blockquote>
+<p><em>Acceptence testing and Issues found</em></p>
+</blockquote>
+<ul>
+<li>Number Of User Stories Passing
+<ul>
+<li>10</li>
+</ul>
+</li>
+<li>Number Of User Stories Partially Passing
+<ul>
+<li>2</li>
+</ul>
+</li>
+<li>Number Of User Stories Without Testing
+<ul>
+<li>0</li>
+</ul>
+</li>
+<li>Issues Found
+<ul>
+<li>Messages not shown upon unsuccessful checkout.</li>
+<li>Design change led to search being implemented differently than originally outlined in test plan.</li>
+</ul>
+</li>
+</ul>
+<h3 id="unit-testing-and-code-coverage">Unit Testing and Code Coverage</h3>
+<p>With our unit testing, we wanted to get 100% coverage of every backend file: Product, ProductList,
+ProductListInterface, ProductController, User, Admin, Customer, UserController, UserListInterface,
+and UserList. In some cases, however, 100% coverage would not be possible; this becomes more true as
+classes become closer to the front-end (IE: User, Customer, and Admin could reach 100% coverage, but
+UserList and UserController could not). This issue was primarily because of the interaction between
+these classes and the main system as a whole; for example, running a test to create a new user would
+fail, not because the method was broken, but because said user had already been created as a result of
+a previous test run.</p>
+<p>Any classes that could not be covered 100% by unit testing were covered thoroughly by manual testing.</p>
+<p>Additionally, some of these coverage misses are because of last minute changes in the Sprint 2 release
+(IE: Customer's  shopping cart changing from a list of products to a map of integers); we hope to remedy
+this in Sprint 3.</p>
+
+</body>
+</html>

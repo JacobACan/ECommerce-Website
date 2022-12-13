@@ -1,0 +1,30 @@
+h1 {
+}
+.cart {
+  margin-left: 2vw;
+}
+
+.product {
+  display: flex;
+}
+.product-amount {
+  color: #ee6055;
+  font-weight: bold;
+  font-size: 1vw;
+  align-items: center;
+  text-align: center;
+  width: 2vw;
+  height: 2vw;
+}
+.price {
+  font-size: 4vw;
+  color: #60d394;
+  font-weight: 900;
+  text-shadow: 0.1vw 0.1vw 0.01vw rgba(0, 0, 0, 0.46);
+}
+ul {
+  list-style-type: none;
+}
+#checkout:hover {
+  color: #60d394;
+}

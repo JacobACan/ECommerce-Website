@@ -1,0 +1,148 @@
+.page-content {
+  margin-top: 7vh;
+}
+.nav-backing {
+  position: fixed;
+  top: 0;
+  height: 7vh;
+  width: 100%;
+  background-color: #edf2f4;
+  border-bottom: 0.1vh solid rgba(0, 0, 0, 0.276);
+  transition: background-color ease 0.3s, color ease 0.3s, height ease 0.1s;
+  box-shadow: 0 0.3vh vh black;
+}
+.info-backing {
+  top: 0;
+  height: 50vh;
+  width: 100%;
+  background-color: #2b2d42;
+  border-bottom: 0.1vh solid rgba(0, 0, 0, 0.276);
+  transition: background-color ease 0.3s, color ease 0.3s, height ease 0.1s;
+}
+.nav-options {
+  margin-top: 1vh;
+  margin-right: 5vw;
+}
+
+nav {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+.navbar-inverse {
+  filter: grayscale(1) invert(1);
+  background-color: rgb(236, 236, 236);
+  box-shadow: none;
+
+  height: 5vh;
+}
+
+ul {
+  display: flex;
+  justify-content: right;
+  margin-right: 4vh;
+}
+li {
+  width: fit-content;
+  display: inline;
+  height: fit-content;
+  align-self: center;
+  margin-left: 5vw;
+}
+
+.fixed-top {
+  padding-top: 1vw;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.nav-icon {
+  width: 5vh;
+  height: 5vh;
+  filter: drop-shadow(0.1vh 0.1vh 0.1vh rgba(0, 0, 0, 0.244));
+  transition: width ease 0.2s, height ease 0.1s, margin-top ease 0.15s;
+}
+.nav-icon:hover {
+  opacity: 70%;
+}
+.nav-icon-inverse {
+  width: 3vh;
+  height: 3vh;
+}
+
+.nav-button {
+  vertical-align: super;
+  font-size: 3vh;
+  padding: 1vh;
+  padding-bottom: 0.3vh;
+  padding-top: 0.3vh;
+  border-style: solid;
+  border-radius: 0.5vh;
+  border-width: 0.01vw;
+  transition: background-color ease 0.5s, color ease 0.5s, font-size ease 0.1s,
+    margin-top ease 0.15s;
+}
+.nav-button-inverse {
+  font-size: 1.5vh;
+  margin-top: -3vh;
+}
+.nav-button:hover {
+  background-color: black;
+  color: white;
+}
+.nav-button:active {
+  opacity: 70%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.logo {
+  width: 5vh;
+  height: 5vh;
+  left: 0%;
+  top: -0vh;
+  opacity: 100%;
+  opacity: 0;
+}
+
+.logo-inverse {
+  width: 5vh;
+  height: 4vh;
+  left: 0%;
+  top: -0vh;
+  opacity: 100%;
+}
+#search-display {
+  cursor: pointer;
+  opacity: 80%;
+}
+
+#search-component {
+  width: 0%;
+  height: 0%;
+  position: absolute;
+  opacity: 0%;
+  margin-right: 4vw;
+  margin-top: -0.5vh;
+  transition: opacity ease 0.2s, width ease 0.3s;
+}
+
+#search-display:hover #search-component {
+  width: 30vw;
+  opacity: 100%;
+}
+select {
+  background-color: inherit;
+  color: inherit;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+option {
+  border-radius: none;
+}

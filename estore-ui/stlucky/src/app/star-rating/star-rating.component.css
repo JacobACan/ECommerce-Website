@@ -1,0 +1,6 @@
+ul {
+  display: flex;
+  grid-template-columns: auto, auto, auto, auto, auto;
+  justify-content: center;
+  list-style-type: none;
+}
